@@ -162,3 +162,35 @@ function closeModalOverlay(event) {
   closeModal();
 }
 closeButtonOverlay.addEventListener('click', closeModalOverlay);
+
+//переключение стрелками между изображениями
+function onKeyArrowChangeImg(event) {
+  if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') {
+    return;
+  }
+  let newIndex = 0;
+  let src = imageEl.src;
+  let newObject = {};
+
+  if (event.key === 'ArrowRight') {
+    newObject = galleryItems.find(item => item.original === src)
+    newIndex = galleryItems.indexOf(newObject) + 1;
+
+    if (newIndex === galleryItems.length) {
+      newIndex = 0;
+    }
+  }
+
+  if (event.key === 'ArrowLeft') {
+    newObject = galleryItems.find(item => item.original === src)
+    newIndex = galleryItems.indexOf(newObject) - 1;
+
+    if (newIndex < galleryItems.length) {
+      newIndex = galleryItems.length - 1;
+    }
+  }
+
+  imageEl.src = galleryItems[newIndex].original;
+}
+
+window.addEventListener('keyup', onKeyArrowChangeImg);
